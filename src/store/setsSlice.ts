@@ -17,12 +17,20 @@ const setsSlice = createSlice({
   name: "sets",
   initialState,
   reducers: {
-    addSets: (state, action: PayloadAction<Set>) => {
+    addSet: (state, action: PayloadAction<Set>) => {
       state.items.push(action.payload);
     },
-    updateSet: (state, action: PayloadAction<Set>) => {
+    updateSet: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        title?: string;
+        description?: string;
+      }>
+    ) => {
       const idx = state.items.findIndex((s) => s.id === action.payload.id);
-      if (idx >= 0) state.items[idx] = action.payload;
+      if (idx >= 0)
+        state.items[idx] = { ...state.items[idx], ...action.payload };
     },
     removeSet: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((s) => s.id !== action.payload);
@@ -30,5 +38,5 @@ const setsSlice = createSlice({
   },
 });
 
-export const { addSets, updateSet, removeSet } = setsSlice.actions;
+export const { addSet, updateSet, removeSet } = setsSlice.actions;
 export default setsSlice.reducer;

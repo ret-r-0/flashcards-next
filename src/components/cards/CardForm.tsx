@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { addCard } from "@/store/cardsSlice";
 import { v4 as uuidv4 } from "uuid";
 
-interface CardsFromProps {
+interface CardFromProps {
   setId: string;
 }
 
-export const CardForm: React.FC<CardsFromProps> = ({ setId }) => {
+export const CardForm: React.FC<CardFromProps> = ({ setId }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const baseId = useId();
+  const qId = `${baseId}-question`;
+  const aId = `${baseId}-answer`;
 
   const dispatch = useAppDispatch();
 
@@ -33,8 +36,11 @@ export const CardForm: React.FC<CardsFromProps> = ({ setId }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-2 p-4 border rounded">
       <div>
-        <label className="block text-sm font-medium">Question</label>
+        <label htmlFor={qId} className="block text-sm font-medium">
+          Question
+        </label>
         <input
+          id={qId}
           type="text"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -44,8 +50,11 @@ export const CardForm: React.FC<CardsFromProps> = ({ setId }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Answer</label>
+        <label htmlFor={aId} className="block text-sm font-medium">
+          Answer
+        </label>
         <input
+          id={aId}
           type="text"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
@@ -56,6 +65,7 @@ export const CardForm: React.FC<CardsFromProps> = ({ setId }) => {
         <button
           type="submit"
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          disabled={!question.trim() || !answer.trim()}
         >
           Add Card
         </button>

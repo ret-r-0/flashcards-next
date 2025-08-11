@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { addSets } from "@/store/setsSlice";
+import { addSet } from "@/store/setsSlice";
 import { v4 as uuidv4 } from "uuid";
 
 export function SetForm() {
@@ -13,7 +13,7 @@ export function SetForm() {
     if (!title.trim()) return;
 
     dispatch(
-      addSets({
+      addSet({
         id: uuidv4(),
         title: title.trim(),
         description: description.trim(),
