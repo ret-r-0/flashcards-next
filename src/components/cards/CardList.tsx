@@ -21,12 +21,22 @@ export const CardList: React.FC<CardListProps> = ({ setId }) => {
       {cards.map((card) => (
         <li
           key={card.id}
-          className="flex justify-between items-centre p-2 border-b"
+          className="flex justify-between items-center p-2 border-b"
         >
           <div>
             <p className="font-medium">{card.front}</p>
             <p className="text-sm text-gray-600">{card.back}</p>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (!confirm("Delete card?")) return;
+              dispatch(removeCard(card.id));
+            }}
+            className="text-red-500"
+          >
+            Delete
+          </button>
         </li>
       ))}
     </ul>

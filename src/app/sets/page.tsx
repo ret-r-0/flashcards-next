@@ -2,9 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { CardForm } from "@/components/cards/CardForm";
 import { CardList } from "@/components/cards/CardList";
+import { removeSet } from "@/store/setsSlice";
 
 export default function SetDetailPage() {
   const params = useParams();
